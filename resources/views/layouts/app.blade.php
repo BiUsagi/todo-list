@@ -29,13 +29,36 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav ms-auto d-flex align-items-center">
-                    <a class="nav-link" href="#">Đăng nhập</a>
-                    <a class="nav-link" href="#">Đăng ký</a>
+                    @auth
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ Auth::user()->name }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">Thông tin tài khoản</a>
+                                </li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">Đăng xuất</button>
+                                    </form>
+                                </li>
+
+                            </ul>
+                        </div>
+                    @else
+                        <a class="nav-link" href="{{ route('login') }}">Đăng nhập</a>
+                        <a class="nav-link" href="{{ route('register') }}">Đăng ký</a>
+                    @endauth
                     <div class="social-icons d-flex">
-                        <a href="#" class="text-decoration-none">
+                        <a href="https://www.facebook.com/sonthichnovel" class="text-decoration-none" target="_blank"
+                            rel="noopener">
                             <i class="fab fa-facebook"></i>
                         </a>
-                        <a href="#" class="text-decoration-none">
+                        <a href="https://github.com/BiUsagi" class="text-decoration-none" target="_blank"
+                            rel="noopener">
                             <i class="fab fa-github"></i>
                         </a>
                     </div>

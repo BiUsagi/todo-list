@@ -41,18 +41,20 @@
                         </h5>
                     </div>
                     <div class="card-body">
-                        <form id="todoForm">
+                        {{-- {{ route('tasks.store') }} --}}
+                        <form id="todoForm" method="POST" action="">
+                            @csrf
                             <div class="mb-3">
                                 <label for="taskTitle" class="form-label">Tiêu đề công việc</label>
-                                <input type="text" class="form-control" id="taskTitle" required>
+                                <input type="text" class="form-control" id="taskTitle" name="title" required>
                             </div>
                             <div class="mb-3">
                                 <label for="taskDescription" class="form-label">Mô tả</label>
-                                <textarea class="form-control" id="taskDescription" rows="3"></textarea>
+                                <textarea class="form-control" id="taskDescription" name="description" rows="3"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="taskStatus" class="form-label">Trạng thái</label>
-                                <select class="form-select" id="taskStatus">
+                                <select class="form-select" id="taskStatus" name="status">
                                     <option value="todo">Cần làm</option>
                                     <option value="doing">Đang làm</option>
                                     <option value="finish">Hoàn thành</option>
@@ -60,7 +62,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="taskDeadline" class="form-label">Hạn hoàn thành</label>
-                                <input type="date" class="form-control" id="taskDeadline">
+                                <input type="date" class="form-control" id="taskDeadline" name="deadline">
                             </div>
                             <button type="submit" class="btn btn-primary w-100">
                                 <i class="fas fa-plus me-2"></i>Thêm Công Việc
@@ -113,7 +115,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="mb-2 text-secondary">Thiết kế và phát triển website todo-list với đầy đủ chức năng</p>
+                            <p class="mb-2 text-secondary">Thiết kế và phát triển website todo-list với đầy đủ chức năng
+                            </p>
                             <small class="deadline-text">
                                 <i class="fas fa-clock me-1"></i>2025-06-10
                             </small>
@@ -141,7 +144,7 @@
                                 <i class="fas fa-clock me-1"></i>2025-06-10
                             </small>
                         </div>
-                         <div class="todo-item todo " data-id="1">
+                        <div class="todo-item todo " data-id="1">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <h6 class="mb-1 flex-grow-1">Hoàn thành dự án website</h6>
                                 <div class="d-flex align-items-center">

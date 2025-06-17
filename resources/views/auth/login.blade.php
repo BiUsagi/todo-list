@@ -4,7 +4,7 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h3 class="mb-4">Đăng nhập</h3>
+                <h3 class="mb-4 text-center">Đăng nhập</h3>
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul class="mb-0">
@@ -33,10 +33,13 @@
                         <label class="form-check-label">Ghi nhớ đăng nhập</label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                    <div class="text-center mb-4">
+                        <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                    </div>
                 </form>
-                <div class="mb-3 text-center">
-                    <a href="{{ route('auth.google') }}" class="btn btn-danger w-100">
+                <hr>
+                <div class="mb-3 text-center mt-4">
+                    <a href="{{ route('auth.google') }}" class="btn btn-danger w-50">
                         <i class="bi bi-google"></i> Đăng nhập với Google
                     </a>
                 </div>

@@ -4,7 +4,7 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h3 class="mb-4">Đăng ký</h3>
+                <h3 class="mb-4 text-center">Đăng ký</h3>
 
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -40,7 +40,15 @@
                         <input type="password" name="password_confirmation" class="form-control" required>
                     </div>
 
-                    <button type="submit" class="btn btn-success">Đăng ký</button>
+                    <div class="text-center mb-4">
+                        <button type="submit" class="btn btn-success ">Đăng ký</button>
+                    </div>
+                    <hr>
+                    <div class="mb-3 text-center mt-4">
+                        <a href="{{ route('auth.google') }}" class="btn btn-danger w-50">
+                            <i class="bi bi-google"></i> Đăng nhập với Google
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
