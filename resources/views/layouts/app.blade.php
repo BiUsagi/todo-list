@@ -71,7 +71,9 @@
     <!-- Main Content -->
     @yield('content')
     <script>
-        window.tasks = @json($tasks);
+        @if (isset($tasks))
+            window.tasks = @json($tasks);
+        @endif
     </script>
     {{-- <script src="{{ asset('js/script.js') }}"></script> --}}
 </body>
