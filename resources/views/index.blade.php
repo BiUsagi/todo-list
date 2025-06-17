@@ -7,25 +7,25 @@
         <div class="row mb-4">
             <div class="col-md-3 col-6">
                 <div class="stats-card">
-                    <p class="stats-number text-danger" id="todoCount">0</p>
+                    <p class="stats-number text-danger" id="todoCount">{{ $todoCounts }}</p>
                     <small class="text-white">Cần làm</small>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="stats-card">
-                    <p class="stats-number text-warning" id="doingCount">0</p>
+                    <p class="stats-number text-warning" id="doingCount">{{ $doingCounts }}</p>
                     <small class="text-white">Đang làm</small>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="stats-card">
-                    <p class="stats-number text-success" id="finishCount">0</p>
+                    <p class="stats-number text-success" id="finishCount">{{ $finishCounts }}</p>
                     <small class="text-white">Hoàn thành</small>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="stats-card">
-                    <p class="stats-number text-primary" id="totalCount">0</p>
+                    <p class="stats-number text-primary" id="totalCount">{{ $todoCounts + $doingCounts + $finishCounts }}</p>
                     <small class="text-white">Tổng cộng</small>
                 </div>
             </div>
@@ -41,8 +41,7 @@
                         </h5>
                     </div>
                     <div class="card-body">
-                        {{-- {{ route('tasks.store') }} --}}
-                        <form id="todoForm" method="POST" action="">
+                        <form id="todoForm" method="POST" action="{{ route('task.store') }}">
                             @csrf
                             <div class="mb-3">
                                 <label for="taskTitle" class="form-label">Tiêu đề công việc</label>
@@ -62,7 +61,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="taskDeadline" class="form-label">Hạn hoàn thành</label>
-                                <input type="date" class="form-control" id="taskDeadline" name="deadline">
+                                <input type="datetime-local" class="form-control" id="taskDeadline" name="deadline">
                             </div>
                             <button type="submit" class="btn btn-primary w-100">
                                 <i class="fas fa-plus me-2"></i>Thêm Công Việc
@@ -91,82 +90,44 @@
                         </div>
                     </div>
                     <div class="card-body text-white" style="max-height: 600px; overflow-y: auto;">
-                        {{-- <div id="todoList">
-                            <div class="empty-state">
-                                <i class="fas fa-clipboard-list"></i>
-                                <h5>Chưa có công việc nào</h5>
-                                <p>Hãy thêm công việc đầu tiên của bạn!</p>
-                            </div>
-                        </div> --}}
-                        <div class="todo-item doing " data-id="1">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h6 class="mb-1 flex-grow-1">Hoàn thành dự án website</h6>
-                                <div class="d-flex align-items-center">
-                                    <span class="status-badge status-doing me-2">doing</span>
-                                    <div class="btn-group">
-                                        <button class="btn btn-outline-warning btn-sm" onclick="editTask(1)"
-                                            title="Chỉnh sửa">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-outline-danger btn-sm" onclick="deleteTask(1)"
-                                            title="Xóa">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
+                        
+                        @if ($tasks->isEmpty())
+                            <div id="todoList">
+                                <div class="empty-state">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <h5>Chưa có công việc nào</h5>
+                                    <p>Hãy thêm công việc đầu tiên của bạn!</p>
                                 </div>
                             </div>
-                            <p class="mb-2 text-secondary">Thiết kế và phát triển website todo-list với đầy đủ chức năng
-                            </p>
-                            <small class="deadline-text">
-                                <i class="fas fa-clock me-1"></i>2025-06-10
-                            </small>
-                        </div>
-                        <div class="todo-item finish " data-id="1">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h6 class="mb-1 flex-grow-1">Hoàn thành dự án website</h6>
-                                <div class="d-flex align-items-center">
-                                    <span class="status-badge status-finish me-2">finish</span>
-                                    <div class="btn-group">
-                                        <button class="btn btn-outline-warning btn-sm" onclick="editTask(1)"
-                                            title="Chỉnh sửa">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-outline-danger btn-sm" onclick="deleteTask(1)"
-                                            title="Xóa">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                        @endif
+
+                        @foreach ($tasks as $item)
+                            <div class="todo-item {{ $item->status }}" data-id="{{ $item->id }}">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h6 class="mb-1 flex-grow-1">{{ $item->title }}</h6>
+                                    <div class="d-flex align-items-center">
+                                        <span class="status-badge status-{{ $item->status }} me-2">{{ $item->status }}</span>
+                                        <div class="btn-group">
+                                            <button class="btn btn-outline-warning btn-sm" onclick="editTask({{ $item->id }})"
+                                                title="Chỉnh sửa">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-outline-danger btn-sm" onclick="deleteTask({{ $item->id }})"
+                                                title="Xóa">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
+                                <p class="mb-2 text-secondary">{{ $item->description }}</p>
+                                </p>
+                                <small class="deadline-text">
+                                    <i class="fas fa-clock me-1"></i>{{ $item->deadline }}
+                                </small>
                             </div>
-                            <p class="mb-2 text-secondary">Thiết kế và phát triển website todo-list với đầy đủ chức năng
-                            </p>
-                            <small class="deadline-text">
-                                <i class="fas fa-clock me-1"></i>2025-06-10
-                            </small>
-                        </div>
-                        <div class="todo-item todo " data-id="1">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h6 class="mb-1 flex-grow-1">Hoàn thành dự án website</h6>
-                                <div class="d-flex align-items-center">
-                                    <span class="status-badge status-todo me-2">todo</span>
-                                    <div class="btn-group">
-                                        <button class="btn btn-outline-warning btn-sm" onclick="editTask(1)"
-                                            title="Chỉnh sửa">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-outline-danger btn-sm" onclick="deleteTask(1)"
-                                            title="Xóa">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mb-2 text-secondary">Thiết kế và phát triển website todo-list với đầy đủ chức năng
-                            </p>
-                            <small class="deadline-text">
-                                <i class="fas fa-clock me-1"></i>2025-06-10
-                            </small>
-                        </div>
+                        @endforeach
+
+
                     </div>
                 </div>
             </div>
