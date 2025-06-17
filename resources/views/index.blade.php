@@ -74,23 +74,19 @@
             <!-- Task List -->
             <div class="col-lg-8">
                 <div class="card todo-card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">
+                    <div class="card-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+                        <h5 class="mb-2 mb-md-0 col-12 col-md-6">
                             <i class="fas fa-list me-2"></i>Danh Sách Công Việc
                         </h5>
-                        <div class="btn-group" role="group">
+                        <div class="btn-group col-12 col-md-6" role="group">
                             <a href="{{ route('task.index') }}"
-                                class="btn btn-outline-light btn-sm {{ request('status') == null ? 'active' : '' }}">Tất
-                                cả</a>
+                                class="btn btn-outline-light btn-sm {{ request('status') == null ? 'active' : '' }}">Tất cả</a>
                             <a href="{{ route('task.index', ['status' => 'todo']) }}"
-                                class="btn btn-outline-light btn-sm {{ request('status') == 'todo' ? 'active' : '' }}">Cần
-                                làm</a>
+                                class="btn btn-outline-light btn-sm {{ request('status') == 'todo' ? 'active' : '' }}">Cần làm</a>
                             <a href="{{ route('task.index', ['status' => 'doing']) }}"
-                                class="btn btn-outline-light btn-sm {{ request('status') == 'doing' ? 'active' : '' }}">Đang
-                                làm</a>
+                                class="btn btn-outline-light btn-sm {{ request('status') == 'doing' ? 'active' : '' }}">Đang làm</a>
                             <a href="{{ route('task.index', ['status' => 'done']) }}"
-                                class="btn btn-outline-light btn-sm {{ request('status') == 'done' ? 'active' : '' }}">Hoàn
-                                thành</a>
+                                class="btn btn-outline-light btn-sm {{ request('status') == 'done' ? 'active' : '' }}">Hoàn thành</a>
                         </div>
                     </div>
                     <div class="card-body text-white" style="max-height: 600px; overflow-y: auto;">
