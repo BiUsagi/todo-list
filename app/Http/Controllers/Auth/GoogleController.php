@@ -33,7 +33,7 @@ class GoogleController extends Controller
 
             Auth::login($user, true);
 
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/');
         } catch (\Exception $e) {
             return redirect('/login')->withErrors('Đăng nhập Google thất bại!');
         }

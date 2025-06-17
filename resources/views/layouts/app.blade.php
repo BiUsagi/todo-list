@@ -19,7 +19,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="{{ route('task.index') }}">
                 <i class="fas fa-tasks me-2"></i>Sou Todo
             </a>
 
@@ -70,7 +70,10 @@
 
     <!-- Main Content -->
     @yield('content')
-    <script src="{{ asset('js/script.js') }}"></script>
+    <script>
+        window.tasks = @json($tasks);
+    </script>
+    {{-- <script src="{{ asset('js/script.js') }}"></script> --}}
 </body>
 
 </html>

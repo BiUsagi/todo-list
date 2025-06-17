@@ -5,13 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\TodoController;
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [TodoController::class, 'index'])->name('home');
 
-Route::get('/dashboard', function () {
-    return view('index');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -29,8 +24,6 @@ Route::prefix('tasks')->name('task.')->group(function () {
     Route::get('/', [TodoController::class, 'index'])->name('index');
     Route::get('/create', [TodoController::class, 'create'])->name('create');
     Route::post('/', [TodoController::class, 'store'])->name('store');
-    Route::get('/{id}', [TodoController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [TodoController::class, 'edit'])->name('edit');
     Route::put('/{id}', [TodoController::class, 'update'])->name('update');
     Route::patch('/{id}', [TodoController::class, 'update'])->name('update');
     Route::delete('/{id}', [TodoController::class, 'destroy'])->name('destroy');

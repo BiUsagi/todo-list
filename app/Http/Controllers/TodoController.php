@@ -25,15 +25,12 @@ class TodoController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status' => 'required|in:todo,doing,finish',
-            'deadline' => 'nullable|date|after_or_equal:today'
+            'status' => 'required|in:todo,doing,done',
         ], [
             'title.required' => 'Tiêu đề công việc là bắt buộc',
             'title.max' => 'Tiêu đề không được vượt quá 255 ký tự',
             'status.required' => 'Trạng thái là bắt buộc',
             'status.in' => 'Trạng thái không hợp lệ',
-            'deadline.date' => 'Định dạng ngày không hợp lệ',
-            'deadline.after_or_equal' => 'Hạn hoàn thành không được là ngày trong quá khứ'
         ]);
 
         // Nếu validation thất bại
@@ -68,32 +65,25 @@ class TodoController extends Controller
     /**
      * Hiển thị danh sách tasks
      */
-    public function index()
+    public function index(Request $request)
     {
-        $todoCounts = Todo::where('status', 'todo')->count();
-        $doingCounts = Todo::where('status', 'doing')->count();
-        $finishCounts = Todo::where('status', 'finish')->count();
-        $tasks = Todo::orderBy('created_at', 'desc')->paginate(10);
+        $userId = auth()->id();
+
+        $status = $request->query('status');
+        $query = Todo::where('user_id', auth()->id());
+        if ($status && in_array($status, ['todo', 'doing', 'done'])) {
+            $query->where('status', $status);
+        }
+        $tasks = $query->orderBy('deadline', 'asc')->get();
+
+        $todoCounts = Todo::where('user_id', $userId)->where('status', 'todo')->count();
+        $doingCounts = Todo::where('user_id', $userId)->where('status', 'doing')->count();
+        $finishCounts = Todo::where('user_id', $userId)->where('status', 'done')->count();
+
+
         return view('index', compact('tasks', 'todoCounts', 'doingCounts', 'finishCounts'));
     }
 
-    /**
-     * Hiển thị chi tiết một task
-     */
-    public function show($id)
-    {
-        $task = Todo::findOrFail($id);
-        return view('tasks.show', compact('task'));
-    }
-
-    /**
-     * Hiển thị form chỉnh sửa task
-     */
-    public function edit($id)
-    {
-        $task = Todo::findOrFail($id);
-        return view('tasks.edit', compact('task'));
-    }
 
     /**
      * Cập nhật task
@@ -105,7 +95,7 @@ class TodoController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status' => 'required|in:todo,doing,finish',
+            'status' => 'required|in:todo,doing,done',
             'deadline' => 'nullable|date'
         ]);
 
