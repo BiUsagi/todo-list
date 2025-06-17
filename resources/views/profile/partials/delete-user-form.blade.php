@@ -1,11 +1,11 @@
 <section class="mb-4">
     <header>
-        <h2 class="h5 text-dark">
+        <h2 class="h5 text-white">
             {{ __('Delete Account') }}
         </h2>
 
         <p class="mt-1 text-muted small">
-            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
+            {{ __('Khi tài khoản của bạn bị xóa, tất cả tài nguyên và dữ liệu của tài khoản đó sẽ bị xóa vĩnh viễn.') }}
         </p>
     </header>
 
