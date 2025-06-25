@@ -49,6 +49,11 @@
                             <i class="bi bi-google"></i> Đăng nhập với Google
                         </a>
                     </div>
+                    <div class="text-center">
+                        <p>Bạn đã có tài khoản? 
+                            <a href="{{ route('login') }}" class="link-primary text-decoration-none">Đăng nhập ngay</a>
+                        </p>
+                    </div>
                 </form>
             </div>
         </div>

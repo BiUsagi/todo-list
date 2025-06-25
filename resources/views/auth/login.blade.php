@@ -43,6 +43,14 @@
                         <i class="bi bi-google"></i> Đăng nhập với Google
                     </a>
                 </div>
+                <div class="text-center">
+                    <p>Bạn chưa có tài khoản? 
+                        <a href="{{ route('register') }}" class="link-primary text-decoration-none">Đăng ký ngay</a>
+                    </p>
+                    <p>
+                        <a href="{{ route('password.request') }}" class="link-secondary text-decoration-none">Quên mật khẩu?</a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
