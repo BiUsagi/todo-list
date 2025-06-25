@@ -146,9 +146,8 @@
                                                 style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-outline-danger btn-sm"
-                                                    title="Xóa"
-                                                    onclick="return confirm('Bạn có chắc muốn xóa công việc này?');">
+                                                <button type="submit"
+                                                    class="btn btn-outline-danger btn-sm btn-delete-task" title="Xóa">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>

@@ -9,6 +9,8 @@ Alpine.start();
 import * as bootstrap from "bootstrap";
 window.bootstrap = bootstrap;
 
+import Swal from "sweetalert2";
+
 document.addEventListener("DOMContentLoaded", function () {
     // Tạo biến global
     window.editTask = function (id) {
@@ -31,4 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const modal = new bootstrap.Modal(document.getElementById("editModal"));
         modal.show();
     };
+
+    
 });

@@ -28,3 +28,36 @@ document.addEventListener("DOMContentLoaded", function () {
         window.scrollTo(0, parseInt(scrollPosition));
     }
 });
+
+// Sử dụng Swal từ CDN (window.Swal)
+document.addEventListener("DOMContentLoaded", function () {
+    const deleteButtons = document.querySelectorAll(".btn-delete-task");
+
+    deleteButtons.forEach((button) => {
+        button.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const form = this.closest("form");
+
+            if (typeof Swal === "undefined") {
+                alert("Không tìm thấy SweetAlert2! Kiểm tra lại script CDN.");
+                return;
+            }
+
+            Swal.fire({
+                title: "Xác nhận xóa nhiệm vụ này?",
+                text: "Thao tác này không thể hoàn tác!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Vâng, xóa nó!",
+                cancelButtonText: "Hủy",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+});
