@@ -42,11 +42,24 @@
                         </h5>
                     </div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
                         <form id="todoForm" method="POST" action="{{ route('task.store') }}">
                             @csrf
                             <div class="mb-3">
                                 <label for="taskTitle" class="form-label">Tiêu đề công việc</label>
-                                <input type="text" class="form-control" id="taskTitle" name="title" required>
+                                <input type="text" class="form-control @error('title') is-invalid @enderror"
+                                    id="taskTitle" name="title" value="{{ old('title') }}">
+                                @error('title')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="taskDescription" class="form-label">Mô tả</label>
@@ -61,7 +74,13 @@
                             </div>
                             <div class="mb-3">
                                 <label for="taskDeadline" class="form-label">Hạn hoàn thành</label>
-                                <input type="datetime-local" class="form-control" id="taskDeadline" name="deadline">
+                                <input type="datetime-local" class="form-control @error('deadline') is-invalid @enderror"
+                                    id="taskDeadline" name="deadline" value="{{ old('deadline') }}">
+                                @error('deadline')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                             <button type="submit" class="btn btn-primary w-100">
                                 <i class="fas fa-plus me-2"></i>Thêm Công Việc
@@ -74,19 +93,24 @@
             <!-- Task List -->
             <div class="col-lg-8">
                 <div class="card todo-card">
-                    <div class="card-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+                    <div
+                        class="card-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
                         <h5 class="mb-2 mb-md-0 col-12 col-md-6">
                             <i class="fas fa-list me-2"></i>Danh Sách Công Việc
                         </h5>
                         <div class="btn-group col-12 col-md-6" role="group">
                             <a href="{{ route('task.index') }}"
-                                class="btn btn-outline-light btn-sm {{ request('status') == null ? 'active' : '' }}">Tất cả</a>
+                                class="btn btn-outline-light btn-sm {{ request('status') == null ? 'active' : '' }}">Tất
+                                cả</a>
                             <a href="{{ route('task.index', ['status' => 'todo']) }}"
-                                class="btn btn-outline-light btn-sm {{ request('status') == 'todo' ? 'active' : '' }}">Cần làm</a>
+                                class="btn btn-outline-light btn-sm {{ request('status') == 'todo' ? 'active' : '' }}">Cần
+                                làm</a>
                             <a href="{{ route('task.index', ['status' => 'doing']) }}"
-                                class="btn btn-outline-light btn-sm {{ request('status') == 'doing' ? 'active' : '' }}">Đang làm</a>
+                                class="btn btn-outline-light btn-sm {{ request('status') == 'doing' ? 'active' : '' }}">Đang
+                                làm</a>
                             <a href="{{ route('task.index', ['status' => 'done']) }}"
-                                class="btn btn-outline-light btn-sm {{ request('status') == 'done' ? 'active' : '' }}">Hoàn thành</a>
+                                class="btn btn-outline-light btn-sm {{ request('status') == 'done' ? 'active' : '' }}">Hoàn
+                                thành</a>
                         </div>
                     </div>
                     <div class="card-body text-white" style="max-height: 600px; overflow-y: auto;">
@@ -161,8 +185,13 @@
                         <input type="hidden" id="editTaskId" name="id">
                         <div class="mb-3">
                             <label for="editTaskTitle" class="form-label">Tiêu đề công việc</label>
-                            <input type="text" class="form-control" id="editTaskTitle" name="title"
-                                placeholder="Nhập tiêu đề..." required>
+                            <input type="text" class="form-control @error('title') is-invalid @enderror"
+                                id="editTaskTitle" name="title" placeholder="Nhập tiêu đề..." required>
+                            @error('title')
+                                <div class="invalid-feedback d-block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="editTaskDescription" class="form-label">Mô tả</label>
@@ -171,15 +200,27 @@
                         </div>
                         <div class="mb-3">
                             <label for="editTaskStatus" class="form-label">Trạng thái</label>
-                            <select class="form-select" id="editTaskStatus" name="status">
+                            <select class="form-select @error('status') is-invalid @enderror" id="editTaskStatus"
+                                name="status">
                                 <option value="todo">Cần làm</option>
                                 <option value="doing">Đang làm</option>
                                 <option value="done">Hoàn thành</option>
                             </select>
+                            @error('status')
+                                <div class="invalid-feedback d-block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="editTaskDeadline" class="form-label">Hạn hoàn thành</label>
-                            <input type="datetime-local" class="form-control" id="editTaskDeadline" name="deadline">
+                            <input type="datetime-local" class="form-control @error('deadline') is-invalid @enderror"
+                                id="editTaskDeadline" name="deadline">
+                            @error('deadline')
+                                <div class="invalid-feedback d-block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>

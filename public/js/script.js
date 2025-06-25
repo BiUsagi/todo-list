@@ -1,22 +1,30 @@
-// document.addEventListener("DOMContentLoaded", function () {
-//     // tasks được gán từ Blade bằng inline script
-//     window.editTask = function (id) {
-//         const task = window.tasks.find((t) => t.id === id);
-//         if (!task) {
-//             alert("Không tìm thấy công việc!");
-//             return;
-//         }
+// --- Giữ trạng thái modal và vị trí cuộn ---
+document.addEventListener("DOMContentLoaded", function () {
+    // --- Giữ trạng thái modal ---
+    var editModal = document.getElementById("editModal");
+    if (editModal) {
+        editModal.addEventListener("show.bs.modal", function () {
+            sessionStorage.setItem("editModalOpen", "true");
+        });
+        editModal.addEventListener("hide.bs.modal", function () {
+            sessionStorage.removeItem("editModalOpen");
+        });
 
-//         document.getElementById("editTaskId").value = task.id;
-//         document.getElementById("editTaskTitle").value = task.title;
-//         document.getElementById("editTaskDescription").value =
-//             task.description || "";
-//         document.getElementById("editTaskStatus").value = task.status;
-//         document.getElementById("editTaskDeadline").value = task.deadline
-//             ? new Date(task.deadline).toISOString().slice(0, 16)
-//             : "";
+        // Khi load lại trang, nếu modal đang mở thì mở lại
+        if (sessionStorage.getItem("editModalOpen") === "true") {
+            var modal = new bootstrap.Modal(editModal);
+            modal.show();
+        }
+    }
 
-//         const modal = new bootstrap.Modal(document.getElementById("editModal"));
-//         modal.show();
-//     };
-// });
+    // --- Giữ vị trí cuộn ---
+    window.addEventListener("scroll", function () {
+        sessionStorage.setItem("scrollPosition", window.scrollY);
+    });
+
+    // Khi load lại trang, cuộn đến vị trí đã lưu
+    var scrollPosition = sessionStorage.getItem("scrollPosition");
+    if (scrollPosition) {
+        window.scrollTo(0, parseInt(scrollPosition));
+    }
+});
